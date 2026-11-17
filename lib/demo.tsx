@@ -28,10 +28,10 @@ const C = createContext<Ctx>(null as any);
 export const useDemo = () => useContext(C);
 
 export function status(id: string, sc: Record<string,number>) {
-  if (id === 'T09') return { color:'var(--blue)', label:'Current target' };
+  if (id === 'T09') return { color:'#3b7ddd', label:'Current target' };
   const s = sc[id];
-  if (s == null) return { color:'var(--grey)', label:'Not assessed' };
-  return s < .4 ? { color:'var(--red)', label:'Weak' } : s < .75 ? { color:'var(--amber)', label:'Developing' } : { color:'var(--green)', label:'Mastered' };
+  if (s == null) return { color:'#8a8f98', label:'Not assessed' };
+  return s < .4 ? { color:'#d64545', label:'Weak' } : s < .75 ? { color:'#f5a623', label:'Developing' } : { color:'#2e9e5b', label:'Mastered' };
 }
 
 export function DemoProvider({ children }: { children: ReactNode }) {

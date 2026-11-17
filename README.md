@@ -1,4 +1,4 @@
-# SolMind AI — Interactive Demo (Next.js)
+# SolMind AI — Interactive Demo (Next.js + shadcn/ui)
 
 Front-end demo for the 18 Nov 2026 submission. All tutoring logic is scripted and all data is sample data.
 
@@ -16,3 +16,12 @@ Front-end demo for the 18 Nov 2026 submission. All tutoring logic is scripted an
 
 ## Next (MVP)
 Supabase auth + tables, OpenAI Route Handlers with Zod, mathjs validator, pgvector RAG, React Flow map, Recharts.
+
+## UI stack
+Tailwind CSS + shadcn/ui components in `components/ui` (components.json included, so `npx shadcn@latest add ...` works on your machine), lucide-react icons. Dark violet theme tokens live in `app/globals.css`.
+
+### Fonts
+- **Nohemi** (headings, `font-display`): add your licensed files to `public/fonts/` as `Nohemi-Regular.woff2`, `Nohemi-Medium.woff2`, `Nohemi-SemiBold.woff2`, `Nohemi-Bold.woff2`. They are not bundled, so until you add them headings fall back to Segoe UI.
+- **Segoe UI** (body and UI, `font-sans`), with Helvetica Neue/Arial fallbacks on systems without it (macOS, Linux).
+
+Routes: / , /login , /register , /onboarding , /dashboard , /assessment/diagnostic , /tutor , /knowledge-map , /analytics

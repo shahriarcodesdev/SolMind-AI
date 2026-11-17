@@ -1,6 +1,9 @@
 'use client';
 import { useState } from 'react';
 import Head from '@/components/Head';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 import { useDemo } from '@/lib/demo';
 type Node = { t: string; o: { l: string; next: string; good?: boolean }[] };
 const S: Record<string, Node> = {
@@ -18,13 +21,8 @@ const S: Record<string, Node> = {
 export default function Tutor() {
   const d = useDemo(); const start = d.mode === 'zero' ? 'z0' : 'a0';
   const [log, setLog] = useState<{ w: 't' | 'u'; s: string }[]>([{ w: 't', s: S[start].t }]); const [cur, setCur] = useState(start); const [wrong, setWrong] = useState(0);
-  function pick(o: Node['o'][number]) {
-    const n = S[o.next]; if (!o.good) setWrong(w => w + 1);
-    if (o.next === 'end') d.bump(['T08', 'T14'], wrong ? .6 : 1);
-    setLog(l => [...l, { w: 'u', s: o.l }, { w: 't', s: n.t }]); setCur(o.next);
-  }
+  function pick(o: Node['o'][number]) { const n = S[o.next]; if (!o.good) setWrong(w => w + 1); if (o.next === 'end') d.bump(['T08', 'T14'], wrong ? .6 : 1); setLog(l => [...l, { w: 'u', s: o.l }, { w: 't', s: n.t }]); setCur(o.next); }
   return (<><Head title="AI Tutor" sub={`Topic: Newton’s Second Law · Mode: ${d.mode === 'zero' ? 'Learn from Zero' : d.mode === 'advanced' ? 'Advanced' : 'Practice & Improve'}`} />
-    <div className="card"><div className="chat">{log.map((m, i) => <div key={i} className={`b ${m.w}`}>{m.s}</div>)}</div>
-      <div className="row">{S[cur].o.map(o => <button key={o.l} className="btn alt" onClick={() => pick(o)}>{o.l}</button>)}</div>
-      <p className="muted" style={{fontSize:13}}>Scripted demo tutor. The full version will use an LLM with curriculum retrieval and validated output.</p></div></>);
+    <Card><CardContent className="flex min-h-[340px] flex-col gap-3 p-6">{log.map((m, i) => <div key={i} className={cn('max-w-xl rounded-2xl px-4 py-3 text-sm', m.w === 't' ? 'self-start bg-muted' : 'self-end bg-secondary')}>{m.s}</div>)}</CardContent>
+      <CardFooter className="flex-wrap gap-2">{S[cur].o.map(o => <Button key={o.l} variant="outline" size="sm" onClick={() => pick(o)}>{o.l}</Button>)}<p className="w-full pt-2 text-xs text-muted-foreground">Scripted demo tutor. The full version will use an LLM with curriculum retrieval and validated output.</p></CardFooter></Card></>);
 }
